@@ -5,13 +5,13 @@
 package Start;
 
 import Class.SetUpCloseOperation;
-import Class.controller;
 import javax.swing.JOptionPane;
 import Class.MyController;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javaapplication45.President;
+import Class.Controller;
 
 
 /**
@@ -47,8 +47,8 @@ public class Login_2 extends javax.swing.JFrame {
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
         txtID = new javax.swing.JTextField();
-        jButton1 = new javax.swing.JButton();
-        jButton2 = new javax.swing.JButton();
+        xacNhanLogin = new javax.swing.JButton();
+        exit = new javax.swing.JButton();
         txtPass = new javax.swing.JPasswordField();
         rbntShowPass = new javax.swing.JRadioButton();
 
@@ -93,19 +93,19 @@ public class Login_2 extends javax.swing.JFrame {
             }
         });
 
-        jButton1.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
-        jButton1.setText("Login");
-        jButton1.addActionListener(new java.awt.event.ActionListener() {
+        xacNhanLogin.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        xacNhanLogin.setText("Login");
+        xacNhanLogin.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton1ActionPerformed(evt);
+                xacNhanLoginActionPerformed(evt);
             }
         });
 
-        jButton2.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
-        jButton2.setText("Exit ");
-        jButton2.addActionListener(new java.awt.event.ActionListener() {
+        exit.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        exit.setText("Exit ");
+        exit.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton2ActionPerformed(evt);
+                exitActionPerformed(evt);
             }
         });
 
@@ -141,9 +141,9 @@ public class Login_2 extends javax.swing.JFrame {
                                 .addGap(54, 54, 54)
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addGroup(layout.createSequentialGroup()
-                                        .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 81, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addComponent(xacNhanLogin, javax.swing.GroupLayout.PREFERRED_SIZE, 81, javax.swing.GroupLayout.PREFERRED_SIZE)
                                         .addGap(57, 57, 57)
-                                        .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 81, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                        .addComponent(exit, javax.swing.GroupLayout.PREFERRED_SIZE, 81, javax.swing.GroupLayout.PREFERRED_SIZE))
                                     .addComponent(txtPass, javax.swing.GroupLayout.PREFERRED_SIZE, 218, javax.swing.GroupLayout.PREFERRED_SIZE)
                                     .addComponent(rbntShowPass, javax.swing.GroupLayout.PREFERRED_SIZE, 173, javax.swing.GroupLayout.PREFERRED_SIZE)
                                     .addComponent(txtID, javax.swing.GroupLayout.PREFERRED_SIZE, 219, javax.swing.GroupLayout.PREFERRED_SIZE))))))
@@ -168,8 +168,8 @@ public class Login_2 extends javax.swing.JFrame {
                 .addComponent(rbntShowPass, javax.swing.GroupLayout.PREFERRED_SIZE, 21, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jButton1)
-                    .addComponent(jButton2))
+                    .addComponent(xacNhanLogin)
+                    .addComponent(exit))
                 .addGap(138, 138, 138))
         );
 
@@ -181,51 +181,50 @@ public class Login_2 extends javax.swing.JFrame {
 
     }//GEN-LAST:event_txtIDActionPerformed
 
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        // TODO add your handling code here:
+    private void xacNhanLoginActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_xacNhanLoginActionPerformed
+                                                
         String account = txtID.getText();
-        String password = txtPass.getText();
+        String password = new String(txtPass.getPassword());
         try {
-
             if (account.isEmpty() || password.isEmpty()) {
                 JOptionPane.showMessageDialog(this, "Bạn cần nhập đầy đủ ID và Password", "Message", JOptionPane.WARNING_MESSAGE);
-                throw new Exception("Loi bo trong thong tin");
+                throw new Exception("Lỗi bỏ trống thông tin");
+            }
 
-            } else if ("admin".equals(account) && "123".equals(password)) {
-                controller.writeAccoutToFile(account,password, "D:\\OOP\\JavaApplication45\\src/account.txt");
+            // Đọc dữ liệu từ file account.txt
+            List<String> accountData = controller.readDataFromFile("src\\account.txt");
+
+            boolean loginSuccess = false;
+
+            // Kiểm tra thông tin đăng nhập
+            for (String line : accountData) {
+                String[] accountInfo = line.split(", ");
+                if (accountInfo.length == 2) {
+                    String fileAccount = accountInfo[0];
+                    String filePassword = accountInfo[1];
+                    if (account.equals(fileAccount) && password.equals(filePassword)) {
+                        loginSuccess = true;
+                        break;
+                    }
+                }
+            }
+
+            if (loginSuccess) {
                 new MainMenu().setVisible(true);
                 this.dispose();
                 JOptionPane.showMessageDialog(this, "Đăng nhập thành công", "Message", JOptionPane.INFORMATION_MESSAGE);
             } else {
-                List<President> list = controller.readDataFromFile("D:\\OOP\\JavaApplication45\\src/president.txt");
-                boolean check = false;
-                for (President m : list) {
-                    if (m.getAccount().equals(account) && m.getPassword().equals(password)) {
-                        controller.writeAccoutToFile(m.getAccount(),m.getPassword(), "D:\\OOP\\JavaApplication45\\src/account.txt");
-                        check = true;
-
-                    }
-
-                }
-                if (check) {
-                    new MainMenu().setVisible(true);
-                    this.dispose();
-                    JOptionPane.showMessageDialog(this, "Đăng nhập thành công", "Message", JOptionPane.INFORMATION_MESSAGE);
-                } else {
-                    JOptionPane.showMessageDialog(this, "Đăng nhập không thành công, vui lòng đăng nhập lại ! ", "Message", JOptionPane.ERROR_MESSAGE);
-                    throw new Exception("Loi dang nhap");
-
-                }
-
+                JOptionPane.showMessageDialog(this, "Đăng nhập không thành công, vui lòng đăng nhập lại!", "Message", JOptionPane.ERROR_MESSAGE);
+                throw new Exception("Lỗi đăng nhập");
             }
         } catch (Exception ex) {
             ex.printStackTrace();
         }
 
-        
-    }//GEN-LAST:event_jButton1ActionPerformed
 
-    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+    }//GEN-LAST:event_xacNhanLoginActionPerformed
+
+    private void exitActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_exitActionPerformed
         // TODO add your handling code here:
         int choice = JOptionPane.showConfirmDialog(this, "Bạn có muốn thoát???", "Question", JOptionPane.YES_NO_OPTION);
 
@@ -235,7 +234,7 @@ public class Login_2 extends javax.swing.JFrame {
             new StartLogin().setVisible(true);
         }
         this.dispose();
-    }//GEN-LAST:event_jButton2ActionPerformed
+    }//GEN-LAST:event_exitActionPerformed
 
     private void txtPassActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtPassActionPerformed
         // TODO add your handling code here:
@@ -274,8 +273,7 @@ public class Login_2 extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton jButton1;
-    private javax.swing.JButton jButton2;
+    private javax.swing.JButton exit;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel5;
@@ -284,5 +282,6 @@ public class Login_2 extends javax.swing.JFrame {
     private javax.swing.JRadioButton rbntShowPass;
     private javax.swing.JTextField txtID;
     private javax.swing.JPasswordField txtPass;
+    private javax.swing.JButton xacNhanLogin;
     // End of variables declaration//GEN-END:variables
 }

@@ -6,7 +6,7 @@ import java.util.function.Function;
  *
  * @author Dell
  */
-public interface controller {
+public interface Controller {
      <T> void writeToFile(List<T> list, String fileName);
 
     <T> List<T> readDataFromFile(String fileName);

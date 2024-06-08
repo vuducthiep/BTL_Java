@@ -13,18 +13,15 @@ import Class.NhanVien;
  *
  * @author Dell
  */
-public class MyController implements controller {
+public class MyController implements Controller {
 
     @Override
     public <T> void writeToFile(List<T> list, String fileName) {
         File file = new File(fileName);
-        try {
-            file.createNewFile();
-            FileWriter fileWriter = new FileWriter(file);
+        try (FileWriter fileWriter = new FileWriter(file)) {
             for (T item : list) {
                 fileWriter.write(item.toString() + System.lineSeparator());
             }
-            fileWriter.close();
         } catch (IOException ex) {
             ex.printStackTrace();
         }
@@ -39,7 +36,7 @@ public class MyController implements controller {
                 String line;
                 while ((line = reader.readLine()) != null) {
                     // Assuming T has a constructor that takes a String
-                    T item = (T) line;
+                    T item = (T) line;  // This cast might not be safe
                     list.add(item);
                 }
             } catch (IOException ex) {
@@ -47,12 +44,11 @@ public class MyController implements controller {
             }
         }
         return list;
-    
     }
 
-    public void writeAccoutToFile(String account,String password ,String fileName) {
+    public void writeAccountToFile(String account, String password, String fileName) {
         try (FileWriter fileWriter = new FileWriter(fileName, true)) { // 'true' for appending
-            fileWriter.write(account +", "+ password + System.lineSeparator());
+            fileWriter.write(account + ", " + password + System.lineSeparator());
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -72,5 +68,8 @@ public class MyController implements controller {
         return accounts.toString();
     }
 
-    
+    @Override
+    public void writeAccoutToFile(String accout, String password, String fileName) {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    }
 }
