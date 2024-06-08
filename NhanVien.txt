@@ -1,0 +1,10 @@
+NV001, Vũ Đức Thiệp, 19, Hưng Yên, Nam, Nhân viên, 310000.0, 0
+NV002, Nguyễn Thu Phương, 19, Hải Dương, Nữ, Nhân viên, 290000.0, 31
+NV003, Võ Tuấn Uy, 20, Nghệ An, Nam, Quản lý, 310000.0, 31
+NV004, Lê Bá Phúc, 21, Thanh Hóa, Khác, Nhân Viên, 250000.0, 31
+NV005, Lê Văn Lương, 21, Hải Phòng, Nam, Nhân Viên, 220000.0, 25
+NV006, Vũ Đức Trung, 20, Hưng Yên, Nữ, Nhân viên, 290000.0, 27
+NV007, Nguyễn Văn Sáng, 21, Hòa Bình, Nam, Nhân viên, 290000.0, 28
+NV008, Elon Musk, 24, Mĩ Đình, Nam, Nhân viên, 350000.0, 23
+NV009, Bill Gate, 23, Mĩ Tho, Nam, Quản lý, 450000.0, 22
+NV010, Phạm Nhật Vượng, 22, Ba Đình, Nam, Nhân viên, 300000.0, 21
